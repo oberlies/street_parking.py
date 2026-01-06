@@ -24,10 +24,10 @@ dir_input = dir + 'data/input.geojson'
 dir_output = dir + 'data/output/'
 
 #coordinate reference system
-#Attention: EPSG:25833 (ETRS89 / UTM zone 33N) is used here – other CRS may be necessary at other locations.
+#Attention: EPSG:25832 (ETRS89 / UTM zone 32N) is used here – other CRS may be necessary at other locations.
 #A metric CRS is necessary to calculate with metre units and distances.
 crs_from = "EPSG:4326"
-crs_to = "EPSG:25833"
+crs_to = "EPSG:25832"
 transform_context = QgsCoordinateTransformContext()
 transform_context.addCoordinateOperation(QgsCoordinateReferenceSystem(crs_from), QgsCoordinateReferenceSystem(crs_to), "")
 coordinateTransformContext=QgsProject.instance().transformContext()
