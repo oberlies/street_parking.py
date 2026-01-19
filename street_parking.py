@@ -85,6 +85,7 @@ process_parking_obstacles   = True # If True, parking segments are cutted where 
 process_separate_parking    = True # If True, separately mapped street parking areas and nodes are included and converted into lines that fit as closely as possible
 process_separate_area_width = True # If True, width and missing orientation values of separately mapped parking areas are derived from the geometry (high computing costs).
 create_point_chain          = True # If True, an extra layer with points for each individual vehicle will be created from the parking lanes
+orientation_default         = False # If truthy, e.g. "parallel", the given orientation will be assumed as default
 
 #list of highway tags that belong to the regular road network
 is_road_list = ['primary', 'primary_link', 'secondary', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'living_street', 'pedestrian', 'road']
@@ -358,8 +359,17 @@ def fillBaseAttributes(layer):
                 else:
                     error += '[p02r] Attribute "parking:right:orientation" und "parking:both:orientation" gleichzeitig vorhanden. '
             else:
-                if ((parking_left and parking_left not in ['no', 'separate'] and not parking_left_orientation) or (parking_right and parking_right not in ['no', 'separate'] and not parking_right_orientation)) and feature.attribute('highway') in is_road_list:
-                    error += '[no_po] Parkstreifenausrichtung nicht für alle Seite vorhanden. '
+                if feature.attribute('highway') in is_road_list:
+                    if parking_left and parking_left not in ['no', 'separate'] and not parking_left_orientation:
+                        if orientation_default:
+                            layer.changeAttributeValue(feature.id(), id_parking_left_orientation, orientation_default)
+                        else:
+                            error += '[no_po] Parkstreifenausrichtung für linke Seite nicht vorhanden. '
+                    if parking_right and parking_right not in ['no', 'separate'] and not parking_right_orientation:
+                        if orientation_default:
+                            layer.changeAttributeValue(feature.id(), id_parking_right_orientation, orientation_default)
+                        else:
+                            error += '[no_po] Parkstreifenausrichtung für rechte Seite nicht vorhanden. '
         else:
             if ((parking_left and parking_left not in ['no', 'separate'] and not parking_left_orientation) or (parking_right and parking_right not in ['no', 'separate'] and not parking_right_orientation)) and feature.attribute('highway') in is_road_list:
                 error += '[no_po] Parkstreifenausrichtung nicht für alle Seite vorhanden. '
