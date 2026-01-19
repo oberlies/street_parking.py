@@ -22,6 +22,8 @@ from console.console import _console
 dir = os.path.dirname(_console.console.tabEditorWidget.currentWidget().path) + '/'
 dir_input = dir + 'data/input.geojson'
 dir_output = dir + 'data/output/'
+if not exists(dir_input):
+    dir_input = dir + 'data/sample_input.geojson'
 
 #coordinate reference system
 #Attention: EPSG:25833 (ETRS89 / UTM zone 33N) is used here – other CRS may be necessary at other locations.
