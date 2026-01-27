@@ -231,7 +231,7 @@
           <Option name="properties" type="Map">
             <Option name="Size" type="Map">
               <Option name="active" value="true" type="bool"/>
-              <Option name="expression" value="&quot;processing_width&quot; - 2" type="QString"/>
+              <Option name="expression" value="&quot;width_proc&quot; - 2" type="QString"/>
               <Option name="type" value="3" type="int"/>
             </Option>
           </Option>
